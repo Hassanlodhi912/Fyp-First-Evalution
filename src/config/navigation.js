@@ -35,6 +35,7 @@ import Productpage from '../pages/Productpage';
 import DetailsScreen from '../pages/DetailsScreen';
 import CategoriesScreen from "../pages/CategoriesScreen";
 import Placeorder from "../pages/PlaceOrder";
+import Payment from '../screens/CheckOut/Payment';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();

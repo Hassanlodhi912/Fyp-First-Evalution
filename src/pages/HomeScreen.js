@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView } from "react-native"
 import { StatusBar } from 'expo-status-bar';
-
+import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import Categories from '../components/Categories'
 import HomeHeadNav from '../components/HomeHeadNav'
@@ -14,14 +14,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../store/slices/productSlice';
 
 const HomeScreen = ({ navigation }) => {
-    const dispatch =useDispatch()
+    const dispatch = useDispatch()
     const [myData, setmyData] = useState([]);
-  
+
     const fetchProduct = async () => {
         try {
             dispatch(fetchProducts())
             // const response = await fetch("https://restapi-production-6795.up.railway.app/api/products"
-        
+
             // const result = await response.json();
             // console.log("result", result)
         } catch (error) {
@@ -38,15 +38,12 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <ScrollView>
                 <View style={styles.searchbox}>
-                    <AntDesign name='search1' size={24} color="black" style={styles.searchicon} />
-                    <TextInput style={styles.input} placeholder='search' />
+                <MaterialIcons name="settings-voice" size={34} color="black" style={styles.searchicon}/>
+                    <TextInput style={styles.input} placeholder='Search' />
                 </View>
                 <Categories name={"Categories"} />
                 <OfferSlider />
-                <Cardslider title={"FEATURED PRODUCTS"}  navigation={navigation} />
-
-
-
+                <Cardslider title={"FEATURED PRODUCTS"} navigation={navigation} />
             </ScrollView>
         </View>
     )
@@ -61,6 +58,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         paddingTop: StatusBar.currentHeight,
+    },
+    mic: {
+        flexDirection: 'row',
     },
     searchbox: {
         flexDirection: 'row',

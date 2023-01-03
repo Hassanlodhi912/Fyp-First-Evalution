@@ -1,18 +1,16 @@
 import { StyleSheet, Text, View, StatusBar, TextInput, FlatList, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
-import { btn1, btn2, colors, hr80, navbtn, navbtnin, navbtnout, nonveg, veg ,voicestyle} from '../global/Style.js';
-import { MaterialIcons } from '@expo/vector-icons';
+import {colors,   nonveg} from '../global/Style.js';
 
 
-const CardSlider = ({ navigation,title,  }) => {
+const CardSlider = ({ navigation, title, }) => {
     const openProductPage = (item) => {
-        navigation.navigate('detail',item)
+        navigation.navigate('detail', item)
     }
 
-    const reduxData  = useSelector(state => state.productReducer.products)
+    const reduxData = useSelector(state => state.productReducer.products)
     return (
         <View style={styles.container}>
-             
             <Text style={styles.cardouthead}>
                 {title}
             </Text>
@@ -22,16 +20,17 @@ const CardSlider = ({ navigation,title,  }) => {
                 data={reduxData}
                 renderItem={({ item }) => (
                     <TouchableOpacity key={item.index}
-                    onPress={() => { openProductPage(item) }}>
+                        onPress={() => { openProductPage(item) }}>
                         <View style={styles.card}>
                             <View style={styles.s1}>
-                                <Image source={{uri :item.images
-                                 } } style={styles.cardimgin} />
+                                <Image source={{
+                                    uri: item.images
+                                }} style={styles.cardimgin} />
                             </View>
                             <View style={styles.s2}>
                                 <Text style={styles.txt1}>{item.name}</Text>
                                 <View style={styles.s2in}>
-                                {item.Price == 'Recipe' ? <Text style={styles.txt2}></Text> : <Text style={styles.txt2}>Rs./{item.Price}</Text>}
+                                    {item.Price == 'Recipe' ? <Text style={styles.txt2}></Text> : <Text style={styles.txt2}>Rs./{item.Price}</Text>}
                                     <Text style={nonveg}></Text>
                                 </View>
 

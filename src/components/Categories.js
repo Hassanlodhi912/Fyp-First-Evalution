@@ -12,12 +12,12 @@ const Categories = ({name}) => {
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={styles.box}>
-                    <FontAwesome5 name="tshirt" size={18} style={styles.myicon} />
+                    <FontAwesome5 name="tshirt" size={18} style={styles.searchicon} />
                     <Text style={styles.mytext}> Clothes</Text>
                 </View>
 
                 <View style={styles.box}>
-                    <MaterialCommunityIcons name="fridge" size={24} color="black" />
+                    <MaterialCommunityIcons name="fridge" size={24} color="black"  />
                     <Text style={styles.mytext}>Home Appliances</Text>
                 </View>
 
@@ -73,5 +73,11 @@ const styles = StyleSheet.create({
     },
     mytext: {
         color: colors.text3,
-    }
+    },
+    input: {
+        marginLeft: 10,
+        width: '90%',
+        fontSize: 18,
+        color: colors.text1,
+    },
 })

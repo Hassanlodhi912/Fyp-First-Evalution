@@ -8,11 +8,32 @@ const DetailsScreen = ({ navigation ,route}) => {
     const data = route.params;
     const [ischecked, setischecked] = useState(false);
     const [quantity, setquantity] = useState('1');
-    const [addonquantity, setaddonquantity] = useState('0');
+    const [addonquantity, setaddonquantity] = useState('1');
     if (route.params === undefined) {
         navigation.navigate('home')
     }
-    
+    const addTocart = () => {
+        const docRef = firebase.firestore().collection('UserCart').doc(firebase.auth().currentUser.uid);
+
+        const data1 = { data, Addonquantity: addonquantity, Foodquantity: quantity }
+        console.log(data1);
+
+        docRef.get().then((doc) => {
+            if (doc.exists) {
+                docRef.update({
+                    cart: firebase.firestore.FieldValue.arrayUnion(data1)
+                })
+                console.log('Updated')
+            } else {
+                docRef.set({
+                    cart: [data1]
+                })
+                console.log('Added')
+            }
+            alert('Added to cart')
+        })
+
+    }
     const increaseAddonQuantity = () => {
         setaddonquantity((parseInt(addonquantity) + 1).toString())
     }

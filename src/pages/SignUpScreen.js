@@ -16,9 +16,9 @@ import { signupUser } from '../config/firebase';
 
 const SignUpScreen = ({ navigation }) => {
   const [formData, setFormData] = useState({
-    // name: "nabeel rizwan",
+    // name: "Hassan lodhi",
     // phoneNumber: "03362319053",
-    // email: "nabeel@gmail.com",
+    // email: "hassan@gmail.com",
     // password: "123456",
     // repassword: "123456"
   })
