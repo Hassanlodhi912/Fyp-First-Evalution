@@ -5,12 +5,54 @@ import { AntDesign } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
 import F1 from "../Images(2)/F1.jpg"
 import { Featuredproduct } from '../Data/Featuredproducts';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCartItems, setCartTotal } from '../store/slices/orderSlice/index';
+import { updateCart, removeFromCart } from '../store/slices/productSlice/index';
 
 const UserCart = ({ navigation }) => {
-    const [cartdata, setCartdata] = useState(null);
+    // const [cartdata, setCartdata] = useState(null);
     const [totalCost, setTotalCost] = useState('0');
 
+    const dispatch = useDispatch()
+    const cartItems = useSelector(state => state.productReducer.cart)
+    console.log(cartItems)
    
+    let cartTotal = 0
+    const updateQuantity = (key, item, index) => {
+        let copyCartItems = [...cartItems]
+        let copyData = { ...item }
+
+        console.log(copyData.quantity)
+
+        if (key === "inc" && copyData.quantity !== item.stock) {
+            copyData.quantity = copyData.quantity + 1
+            copyCartItems[index] = copyData
+            dispatch(updateCart(copyCartItems))
+        }
+        if (key === "dec" && copyData.quantity !== 0) {
+            copyData.quantity = copyData.quantity - 1
+            copyCartItems[index] = copyData
+            dispatch(updateCart(copyCartItems))
+        }
+    }
+
+    const removeItem = (index) => {
+        let copyData = [...cartItems]
+        copyData.splice(index, 1)
+        dispatch(removeFromCart(copyData))
+    }
+
+    const checkout = () => {
+        dispatch(setCartItems(cartItems))
+        dispatch(setCartTotal(cartTotal))
+        navigation.navigate("deliveryInfo")
+    }
+
+    if (!cartItems[0]) {
+        return <Text varient='h2' style={styles.text}>Cart Is Empty</Text>
+
+    }
+
     return (
 
         <View style={styles.containerout}>
@@ -25,14 +67,14 @@ const UserCart = ({ navigation }) => {
             <View style={styles.container}>
                 <Text style={styles.head1}>Your Cart</Text>
                 <View style={styles.cartout}>
-                        <FlatList style={styles.cardlist} data={Featuredproduct} renderItem={
+                        <FlatList style={styles.cardlist} data={cartItems} renderItem={
                             ({ item }) => {
                                 return (
                                     <View style={styles.cartcard}>
                                         <Image source={F1} style={styles.cartimg} />
                                         <View style={styles.cartcardin}>
                                             <View style={styles.c1}>
-                                                <Text style={styles.txt1}>1&nbsp;hassan</Text>
+                                                <Text style={styles.txt1}>hassan</Text>
                                                 <Text style={styles.txt2}>Rs 1096/each</Text>
                                             </View>
                                 

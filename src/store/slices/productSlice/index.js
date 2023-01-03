@@ -13,7 +13,6 @@ export const fetchProducts = createAsyncThunk(
     const response = await fetch("https://restapi-production-6795.up.railway.app/api/products")
     // return response.data
     const result = await response.json();
-    console.log("action",result);
     return result.Products
   }
 )
@@ -44,7 +43,7 @@ export const productSlice = createSlice({
     },
 
     addToCart: (state, action) => {
-      // console.log("add to cart", action.payload)
+      console.log("add to cart", action.payload)
       state.cart = [...state.cart, action.payload]
     },
 
@@ -65,7 +64,6 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      console.log("reducer",action.payload)
       state.products = action.payload
     })
     //   builder.addCase(fetchProductDetails.fulfilled, (state, action) => {

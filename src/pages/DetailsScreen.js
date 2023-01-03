@@ -4,6 +4,7 @@ import { btn1, btn2, colors, hr80, navbtn, navbtnin, navbtnout, nonveg, veg ,voi
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { incdecbtn, incdecinput, incdecout } from '../global/Style.js'
+import { addToCart } from '../store/slices/productSlice/index.js';
 const DetailsScreen = ({ navigation ,route}) => {
     const data = route.params;
     const [ischecked, setischecked] = useState(false);
@@ -12,28 +13,29 @@ const DetailsScreen = ({ navigation ,route}) => {
     if (route.params === undefined) {
         navigation.navigate('home')
     }
-    const addTocart = () => {
-        const docRef = firebase.firestore().collection('UserCart').doc(firebase.auth().currentUser.uid);
 
-        const data1 = { data, Addonquantity: addonquantity, Foodquantity: quantity }
-        console.log(data1);
+    const handlePress = () => {
+        let copyData = {
+            addonquantity: '',
+            coords: {}
+        }
+        copyData = data
+        copyData.quantity = quantity
+        const { name, coords } = restInfo
+        copyData.restName = name
+        copyData.coords = coords
 
-        docRef.get().then((doc) => {
-            if (doc.exists) {
-                docRef.update({
-                    cart: firebase.firestore.FieldValue.arrayUnion(data1)
-                })
-                console.log('Updated')
-            } else {
-                docRef.set({
-                    cart: [data1]
-                })
-                console.log('Added')
-            }
-            alert('Added to cart')
-        })
+        dispatch(addToCart(copyData))
 
+        copyData ={}
+        // alert("Successfully added")
     }
+
+    if (!data) {
+        return <Text>Loading</Text>
+    }
+
+    
     const increaseAddonQuantity = () => {
         setaddonquantity((parseInt(addonquantity) + 1).toString())
     }
@@ -90,7 +92,7 @@ const DetailsScreen = ({ navigation ,route}) => {
                     </View>
                     <View style={styles.btncont}>
                         <TouchableOpacity style={btn2}
-                        onPress={() => navigation.navigate('Cart')} >
+                        onPress={() => navigation.navigate('Cart',handlePress)} >
                             <Text style={styles.btntxt}>Add to Cart</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={btn2}
